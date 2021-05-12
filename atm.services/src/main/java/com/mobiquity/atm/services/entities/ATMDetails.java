@@ -12,7 +12,7 @@ public class ATMDetails implements Serializable {
 
 	private ATMAddressDetails address;
 	private String distance;
-	private ATMOpeningHours[] openingHours;
+	private List<ATMOpeningHours> openingHours;
 	private String functionality;
 	private String type;
 	
@@ -29,10 +29,11 @@ public class ATMDetails implements Serializable {
 		this.distance = distance;
 	}
 	
-	public ATMOpeningHours[] getOpeningHours() {
+	
+	public List<ATMOpeningHours> getOpeningHours() {
 		return openingHours;
 	}
-	public void setOpeningHours(ATMOpeningHours[] openingHours) {
+	public void setOpeningHours(List<ATMOpeningHours> openingHours) {
 		this.openingHours = openingHours;
 	}
 	public String getFunctionality() {
