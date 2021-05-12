@@ -3,6 +3,8 @@ package com.mobiquity.atm.services.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,11 +33,15 @@ public class ATMController {
 	@Autowired
 	private PropertyUtils propertyUtil;
 	
+	private Logger logger = (Logger) LoggerFactory.getLogger(ATMController.class);
+	
 	@GetMapping("/getATMsList")
 	public List<ATMDetails> getATMDetails(){
+		logger.info("ATMController - getATMDetails() :: Start");
 		List<ATMDetails> atmDetailsList = new ArrayList<ATMDetails>();
 		String BASE_URL = propertyUtil.getProperty(ATMServiceConstants.ATM_LIST_END_POINT_URL);
 		System.out.println("BASE_URL : "+BASE_URL);
+		logger.info("ATMController - BASE_URL : "+BASE_URL);
 		try{
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
@@ -47,11 +53,14 @@ public class ATMController {
 				responseBody = responseBody.substring(5, responseBody.length());
 				ObjectMapper objMapper = new ObjectMapper();
 				atmDetailsList = objMapper.readValue(responseBody, new TypeReference<List>() {});
+//				logger.info("atmDetailsList : "+atmDetailsList.toString());
 			}
 		}catch(Exception e){
+			logger.info("Exception In ATMController : "+e.getMessage());
 			e.printStackTrace();
 		}
-		
+		logger.info("ATMController atmDetailsList size : "+atmDetailsList.size());
+		logger.info("ATMController - getATMDetails() :: End");
 		return atmDetailsList;
 	}
 }
